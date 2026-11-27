@@ -1,0 +1,43 @@
+TASK 6: BACKUP AND RESTORE
+
+1. BACKUP DATABASE
+
+mongodump --db company_advanced --archive=company_advanced.archive --gzip
+
+2. VERIFY BACKUP FILE
+
+ls -lh company_advanced.archive
+
+3. RESTORE DATABASE WITH A DIFFERENT NAME
+
+mongorestore \
+  --archive=company_advanced.archive \
+  --gzip \
+  --nsFrom="company_advanced.*" \
+  --nsTo="company_advanced_restore.*"
+
+4. VERIFY RESTORED DATABASE
+
+Open MongoDB Shell:
+
+mongosh
+
+show dbs
+
+use company_advanced_restore
+
+show collections
+
+5. VERIFY DOCUMENT COUNTS
+
+db.employees.countDocuments()
+
+Result: 4
+
+db.departments.countDocuments()
+
+Result: 2
+
+db.sessions.countDocuments()
+
+Result: 0
